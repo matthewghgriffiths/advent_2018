@@ -1,16 +1,15 @@
 # -*- coding: utf-8 -*-
 import itertools
 
-with open('input', 'r') as f:
+with open('day1/input', 'r') as f:
     data = f.read().split("\n")
-
 delta_freq = list(map(int, filter(bool, data)))
 
-# first input
+# first star
 total = sum(delta_freq)
 print(total)
 
-
+# second star
 freq = 0
 frequencies = set([freq])
 for d in itertools.cycle(delta_freq):
