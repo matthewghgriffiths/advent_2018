@@ -2,6 +2,8 @@
 from itertools import chain
 from collections import Counter
 
+# First star
+
 with open('day2/input', 'r') as f:
     ids = f.read().split('\n')[:-1]
 

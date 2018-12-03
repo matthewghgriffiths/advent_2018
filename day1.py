@@ -9,6 +9,7 @@ delta_freq = list(map(int, filter(bool, data)))
 total = sum(delta_freq)
 print(total)
 
+
 # second star
 freq = 0
 frequencies = set([freq])
