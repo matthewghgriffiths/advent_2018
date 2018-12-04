@@ -24,8 +24,7 @@ print("{:d} pieces overlap with other claims".format(len(double_counts)))
 for line in lines:
     claim = line.split(" ")[0]
     (x, y), (w, h) = parse_line(line)
-    counts = set(square_counts[(i, j)]
-                 for i in range(x, x + w) for j in range(y, y + h))
-    if counts == set([1]):
+    if all(square_counts[(i, j)] == 0
+           for i in range(x, x + w) for j in range(y, y + h)):
         print("claim {:s} does not overlap with any others".format(claim))
         break
