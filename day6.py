@@ -12,37 +12,24 @@ with open('day6/input.txt', 'r') as f:
         [int(n) for n in line.split(", ")]
         for line in f.read().strip('\n').split("\n")])
 
+# 1
 X, Y = zip(*coords)
 xhi, xlo = max(X), min(X)
 yhi, ylo = max(Y), min(Y)
-
 areas = collections.defaultdict(list)
+infinite = set()
 for x in range(xlo, xhi + 1):
     for y in range(ylo, yhi + 1):
         dists = np.linalg.norm(coords - [[x,y]], ord=1, axis=1)
         asort = dists.argsort()
         if dists[asort[0]] != dists[asort[1]]:
             areas[asort[0]].append([x,y])
-
-infinite = set()
-for x in range(xlo -1, xhi + 2):
-    y = ylo - 1
-    infinite.add(
-        np.linalg.norm(coords - [[x,y]], ord=1, axis=1).argmin())
-    y = yhi + 1
-    infinite.add(
-        np.linalg.norm(coords - [[x,y]], ord=1, axis=1).argmin())
-for y in range(ylo -1, yhi + 2):
-    x = xlo - 1
-    infinite.add(
-        np.linalg.norm(coords - [[x,y]], ord=1, axis=1).argmin())
-    x = xhi + 1
-    infinite.add(
-        np.linalg.norm(coords - [[x,y]], ord=1, axis=1).argmin())
+        if any((x == xlo, x == xhi, y == ylo, y == yhi)):
+            infinite.add(asort[0])
 
 print(max((len(area) for i, area in areas.items() if i not in infinite)))
 
-# day 2
+# 2
 grid = np.array(np.meshgrid(np.arange(xlo, xhi+1),
                             np.arange(ylo, yhi+1))).reshape(2, -1).T
 dists = np.linalg.norm(grid[:,None,:] - coords[None,:,:], ord=1, axis=2)
