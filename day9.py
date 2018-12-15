@@ -72,6 +72,22 @@ def play_game(nplayers, last_marble):
             scores[player] += removed + marble
     print(max(enumerate(scores), key=lambda x: x[1]))
 
+from collections import deque, defaultdict
+
+def play_game(max_players, last_marble):
+    scores = defaultdict(int)
+    circle = deque([0])
+
+    for marble in tqdm(range(1, last_marble + 1)):
+        if marble % 23:
+            circle.rotate(-1)
+            circle.append(marble)
+        else:
+            circle.rotate(7)
+            scores[marble % max_players] += marble + circle.pop()
+            circle.rotate(-1)
+
+    return max(scores.values()) if scores else 0
 
 play_game(nplayers, last_marble)
-# play_game(nplayers, last_marble * 100)
+play_game(nplayers, last_marble * 100)
